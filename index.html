@@ -62,12 +62,13 @@ tailwind.config = { theme: { extend: {
   .vcard:active .play { transform:scale(.92); }
   .vchip { position:absolute; bottom:.6rem; inset-inline-start:.6rem; background:rgba(0,0,0,.75); border:1px solid rgba(255,255,255,.1); border-radius:.5rem; padding:.25rem .65rem; font-size:.7rem; font-weight:700; pointer-events:none; }
 
-  /* ---------- Modal sizing (dvh with vh fallback) ---------- */
-  .doc-stage { height:calc(100vh - 7rem); }
-  @supports (height:100dvh) {
-      .doc-stage { height:calc(100dvh - 7rem); }
+  /* ---------- Fullscreen viewer ---------- */
+  .fs-bar { height:calc(3rem + env(safe-area-inset-top,0px)); padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) 0 env(safe-area-inset-left,0px); }
+  /* phone in landscape: no bar, the video gets the whole screen; the close button floats top-left */
+  @media (orientation:landscape) and (max-height:520px) {
+    .fs-bar { position:absolute; top:0; left:0; right:0; height:0; padding:0; z-index:5; background:transparent; pointer-events:none; }
+    .fs-bar button { pointer-events:auto; margin:.5rem; margin-left:max(.5rem,env(safe-area-inset-left,0px)); }
   }
-  .doc-box { max-width:64rem; }
 
   @media (prefers-reduced-motion: reduce) {
     *, ::before, ::after { animation:none !important; transition:none !important; }
@@ -320,16 +321,12 @@ tailwind.config = { theme: { extend: {
   <button id="mobileLangToggle" class="flex flex-col items-center gap-1 text-slate-200 py-1"><i class="fa-solid fa-globe text-base text-cyanGlow"></i><span class="text-[10px] font-bold" id="mobileLangText">EN</span></button>
 </div>
 
-<!-- Cinema modal -->
-<div id="modal" class="hidden fixed inset-0 z-[60] items-center justify-center bg-black/95 p-3" style="padding-top:max(.75rem,env(safe-area-inset-top));padding-bottom:max(.75rem,env(safe-area-inset-bottom))" role="dialog" aria-modal="true">
-  <div id="modalBox" class="w-full flex flex-col gap-2.5">
-    <div class="flex items-center justify-between gap-2">
-      <a id="externalPlayerLink" href="#" target="_blank" rel="noopener" class="glass px-3.5 py-2 rounded-full text-xs font-bold text-skyGlow flex items-center gap-1.5 hover:bg-white/15 transition"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i><span data-i18n="btnOpenExternal"></span></a>
-      <button id="closeModal" type="button" class="w-10 h-10 shrink-0 rounded-full glass text-xl flex items-center justify-center hover:bg-crimson transition" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div id="modalStage" class="relative w-full rounded-2xl overflow-hidden bg-black border border-white/15 shadow-2xl">
-    </div>
+<!-- Fullscreen viewer (edge-to-edge, in-page) -->
+<div id="modal" class="hidden fixed inset-0 z-[60] flex-col bg-black" role="dialog" aria-modal="true">
+  <div class="fs-bar shrink-0 flex items-center bg-navy" dir="ltr">
+    <button id="closeModal" type="button" class="w-10 h-10 m-1.5 rounded-full bg-black/70 border border-white/20 text-white text-lg flex items-center justify-center hover:bg-crimson transition" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
   </div>
+  <div id="modalStage" class="relative flex-1 min-h-0 w-full bg-black"></div>
 </div>
 
 <script>
@@ -395,12 +392,12 @@ $('skillsTech').innerHTML  = [7,8,9,10,11].map(n => chip('sk' + n)).join('');
 document.querySelectorAll('[data-video]').forEach(el => {
   const id = el.dataset.video, accent = el.dataset.accent || 'sky';
   el.innerHTML = `
-    <a class="vcard group" href="https://drive.google.com/file/d/${id}/view" target="_blank" rel="noopener" aria-label="Watch fullscreen">
+    <button type="button" class="vcard group" data-modal="https://drive.google.com/file/d/${id}/preview" data-type="video" aria-label="Watch fullscreen">
       <img src="https://drive.google.com/thumbnail?id=${id}&sz=w1000" alt="" loading="lazy" decoding="async" onerror="this.style.display='none'">
       <span class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/35 pointer-events-none"></span>
       <span class="absolute inset-0 flex items-center justify-center pointer-events-none"><span class="play play-${accent}"><i class="fa-solid fa-play"></i></span></span>
       <span class="vchip"><i class="fa-solid fa-up-right-and-down-left-from-center text-skyGlow"></i> <span data-i18n="watch"></span></span>
-    </a>`;
+    </button>`;
 });
 
 // Certificates
@@ -432,34 +429,58 @@ function setLanguage(l) {
 }
 $('langToggleBtn').onclick = $('mobileLangToggle').onclick = () => setLanguage(lang === 'ar' ? 'en' : 'ar');
 
-/* ---------- Lightbox (poster & certificates only) ---------- */
-const modal = $('modal'), box = $('modalBox'), stage = $('modalStage');
-let opener = null;
+/* ---------- Fullscreen viewer ---------- */
+const modal = $('modal'), stage = $('modalStage');
+let opener = null, usedFs = false;
 const idOf = u => (u.match(/\/d\/([^/]+)/) || [])[1];
 
 function mountFrame(src) {
   stage.innerHTML = '';
   const f = document.createElement('iframe');
   f.className = 'absolute inset-0 w-full h-full border-0';
-  f.allow = 'fullscreen'; f.allowFullscreen = true; f.title = 'Preview'; f.src = src;
+  f.allow = 'autoplay; fullscreen; picture-in-picture; encrypted-media';
+  f.allowFullscreen = true; f.title = 'Player'; f.src = src;
   stage.appendChild(f);
 }
-function openModal(trigger) {
-  const url = trigger.dataset.modal, id = idOf(url);
-  opener = trigger;
-  box.className = 'w-full flex flex-col gap-2.5 doc-box';
-  stage.className = 'relative w-full rounded-2xl overflow-hidden bg-black border border-white/15 shadow-2xl doc-stage';
-  $('externalPlayerLink').href = url.replace('/preview', '/view');
+function mountImage(id, url) {
   const img = new Image();
   img.className = 'absolute inset-0 w-full h-full object-contain';
   img.alt = ''; img.onerror = () => mountFrame(url);
   img.src = `https://drive.google.com/thumbnail?id=${id}&sz=w2000`;
   stage.innerHTML = ''; stage.appendChild(img);
+}
+// Real browser fullscreen where supported (Android, desktop, iPad); iPhone Safari ignores it,
+// so the overlay itself already covers the whole screen there.
+function enterFs(isVideo) {
+  const rq = modal.requestFullscreen || modal.webkitRequestFullscreen;
+  if (!rq) return;
+  try {
+    const p = rq.call(modal);
+    usedFs = true;
+    if (p && p.then) p.then(() => {
+      if (isVideo && screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {});
+    }).catch(() => { usedFs = false; });
+  } catch (e) { usedFs = false; }
+}
+function leaveFs() {
+  try { if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); } catch (e) {}
+  const ex = document.exitFullscreen || document.webkitExitFullscreen;
+  if (ex && (document.fullscreenElement || document.webkitFullscreenElement)) {
+    try { const p = ex.call(document); if (p && p.catch) p.catch(() => {}); } catch (e) {}
+  }
+  usedFs = false;
+}
+function openModal(trigger) {
+  const url = trigger.dataset.modal, id = idOf(url), isVideo = trigger.dataset.type === 'video';
+  opener = trigger;
+  isVideo ? mountFrame(url) : mountImage(id, url);
   modal.classList.remove('hidden'); modal.classList.add('flex');
   document.documentElement.classList.add('modal-open');
+  enterFs(isVideo);
   $('closeModal').focus({ preventScroll: true });
 }
 function closeModal() {
+  leaveFs();
   stage.innerHTML = '';
   modal.classList.add('hidden'); modal.classList.remove('flex');
   document.documentElement.classList.remove('modal-open');
@@ -467,8 +488,11 @@ function closeModal() {
 }
 document.addEventListener('click', e => { const t = e.target.closest('[data-modal]'); if (t) openModal(t); });
 $('closeModal').onclick = closeModal;
-modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal(); });
+// If the user leaves fullscreen with the system gesture / back button, close the viewer too
+['fullscreenchange', 'webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => {
+  if (usedFs && !(document.fullscreenElement || document.webkitFullscreenElement) && !modal.classList.contains('hidden')) closeModal();
+}));
 
 /* ---------- Mobile menu ---------- */
 const menu = $('mobileMenu'), icon = $('menuIcon');
