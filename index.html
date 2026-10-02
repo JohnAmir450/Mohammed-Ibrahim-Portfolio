@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>محمد إبراهيم | Mohamed Ibrahim — مراسل تلفزيوني</title>
+<meta name="description" content="محمد إبراهيم، مراسل تلفزيوني وصحفي إعلامي. تغطيات رياضية وميدانية ولقاءات تلفزيونية.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script>
+tailwind.config = { theme: { extend: {
+  colors: { navy: '#0B132B', navy2: '#1C2541', slate9: '#0f172a', crimson: '#EF233C', cyan: '#4CC9F0' },
+  fontFamily: { ar: ['Cairo', 'sans-serif'], en: ['Plus Jakarta Sans', 'sans-serif'] }
+}}}
+</script>
+<style>
+  html { scroll-padding-top: 5rem; }
+  body { font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif; background: #0f172a; color: #fff; overflow-x: hidden; }
+  .glass { background: rgba(255,255,255,.05); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.1); }
+  .glow { position: absolute; border-radius: 9999px; filter: blur(110px); opacity: .28; pointer-events: none; animation: drift 14s ease-in-out infinite alternate; }
+  @keyframes drift { to { transform: translate(40px, -30px) scale(1.15); } }
+  @keyframes pulseDot { 0%,100% { box-shadow: 0 0 0 0 rgba(239,35,60,.7); } 70% { box-shadow: 0 0 0 10px rgba(239,35,60,0); } }
+  .live-dot { animation: pulseDot 1.6s infinite; }
+  .tilt { transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; transform-style: preserve-3d; }
+  .tilt:hover { border-color: rgba(76,201,240,.6); box-shadow: 0 0 0 1px rgba(76,201,240,.35), 0 18px 50px -18px rgba(76,201,240,.45); }
+  .ratio169 { aspect-ratio: 16/9; }
+  .frame::before { content: ''; position: absolute; inset: -3px; border-radius: 1.6rem; background: conic-gradient(from 0deg, #EF233C, #4CC9F0, #EF233C); animation: spin 8s linear infinite; z-index: 0; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.show { opacity: 1; transform: none; }
+  .ticker { animation: marquee 28s linear infinite; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(50%); } }
+  a:focus-visible, button:focus-visible { outline: 2px solid #4CC9F0; outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { *, ::before, ::after { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<header class="fixed top-0 inset-x-0 z-50 glass !border-x-0 !border-t-0 bg-navy/70">
+  <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
+    <a href="#top" class="font-extrabold text-lg whitespace-nowrap">محمد إبراهيم <span class="font-en text-cyan text-sm font-bold">| Mohamed Ibrahim</span></a>
+    <nav class="hidden lg:flex items-center gap-6 text-sm text-slate-300">
+      <a class="hover:text-white" href="#about">عن المراسل</a>
+      <a class="hover:text-white" href="#graduation">مشروع التخرج</a>
+      <a class="hover:text-white" href="#coverage">التغطيات واللقاءات</a>
+      <a class="hover:text-white" href="#experience">الشهادات والخبرات</a>
+      <a class="hover:text-white" href="#contact">تواصل معي</a>
+    </nav>
+    <div class="flex items-center gap-2">
+      <a href="#contact" class="hidden sm:inline-block bg-crimson hover:bg-red-600 transition px-4 py-2 rounded-full text-sm font-bold">تواصل الآن</a>
+      <button id="menuBtn" class="lg:hidden w-10 h-10 glass rounded-lg" aria-label="القائمة"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+  <div id="mobileMenu" class="hidden lg:hidden px-4 pb-4 flex-col gap-3 text-slate-200">
+    <a class="py-1" href="#about">عن المراسل</a><a class="py-1" href="#graduation">مشروع التخرج</a>
+    <a class="py-1" href="#coverage">التغطيات واللقاءات</a><a class="py-1" href="#experience">الشهادات والخبرات</a>
+    <a class="py-1" href="#contact">تواصل معي</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section id="top" class="relative min-h-screen flex items-center pt-24 pb-20 bg-gradient-to-b from-navy via-slate9 to-slate9 overflow-hidden">
+  <div class="glow w-96 h-96 bg-crimson -top-10 -right-20"></div>
+  <div class="glow w-96 h-96 bg-cyan bottom-0 -left-20" style="animation-delay:-5s"></div>
+  <div id="about" class="relative max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
+    <div class="order-2 lg:order-1">
+      <span class="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-sm font-semibold">
+        <span class="w-2.5 h-2.5 rounded-full bg-crimson live-dot"></span> 🔴 مراسل تلفزيوني وصانع محتوى ميداني
+      </span>
+      <h1 class="mt-6 text-4xl sm:text-5xl xl:text-6xl font-black leading-tight">محمد إبراهيم<br><span class="font-en text-cyan text-3xl sm:text-4xl xl:text-5xl">Mohamed Ibrahim</span></h1>
+      <p class="mt-5 text-lg text-slate-300 max-w-xl leading-8">تغطية الأحداث الرياضية والتعليمية، صحافة الميدان، وإدارة اللقاءات التلفزيونية باحترافية وشغف.</p>
+      <p class="mt-4 text-slate-400 max-w-xl leading-8">خريج كلية الإعلام (جامعة بني سويف)، متخصص في التقديم التلفزيوني والمراسلة الميدانية، صاحب خبرة في تغطية كبرى الفعاليات الرياضية والمبادرات القومية مثل فعاليات النادي الأهلي ومبادرة مدرستنا.</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#coverage" class="bg-crimson hover:bg-red-600 transition px-7 py-3 rounded-full font-bold"><i class="fa-solid fa-play ml-2"></i>مشاهدة الأعمال</a>
+        <a href="#contact" class="glass hover:bg-white/10 transition px-7 py-3 rounded-full font-bold"><i class="fa-solid fa-comments ml-2"></i>تواصل مباشر</a>
+      </div>
+    </div>
+    <div class="order-1 lg:order-2 flex justify-center">
+      <div class="relative w-72 sm:w-80 lg:w-96">
+        <div class="frame relative rounded-3xl p-[3px]">
+          <div class="relative z-10 rounded-3xl overflow-hidden bg-navy2" style="aspect-ratio:3/4">
+            <img src="https://drive.google.com/thumbnail?id=1S8hrp8dITk-wtaegHXNopqGg4u8cTncR&sz=w1000" alt="محمد إبراهيم" class="w-full h-full object-cover" id="heroImg"
+                 onerror="this.replaceWith(Object.assign(document.createElement('iframe'),{src:'https://drive.google.com/file/d/1S8hrp8dITk-wtaegHXNopqGg4u8cTncR/preview',className:'w-full h-full border-0',loading:'lazy'}))">
+            <div class="absolute top-3 right-3 flex items-center gap-2 bg-crimson px-3 py-1 rounded-md text-xs font-en font-extrabold tracking-wide">
+              <span class="w-2 h-2 rounded-full bg-white live-dot"></span> ON AIR
+            </div>
+            <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-navy to-transparent p-4 pt-12">
+              <div class="border-r-4 border-crimson pr-3">
+                <div class="font-extrabold">محمد إبراهيم</div>
+                <div class="text-xs text-cyan font-en">TV Reporter · Broadcast Journalist</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ticker -->
+  <div class="absolute bottom-0 inset-x-0 bg-crimson/90 overflow-hidden text-sm font-bold h-9 flex items-center" aria-hidden="true">
+    <div class="ticker flex whitespace-nowrap gap-10 min-w-max">
+      <span>● تغطية ميدانية مباشرة</span><span>● النادي الأهلي</span><span>● مبادرة مدرستنا</span><span>● لقاءات تلفزيونية</span><span>● صحافة الميدان</span>
+      <span>● تغطية ميدانية مباشرة</span><span>● النادي الأهلي</span><span>● مبادرة مدرستنا</span><span>● لقاءات تلفزيونية</span><span>● صحافة الميدان</span>
+      <span>● تغطية ميدانية مباشرة</span><span>● النادي الأهلي</span><span>● مبادرة مدرستنا</span><span>● لقاءات تلفزيونية</span><span>● صحافة الميدان</span>
+      <span>● تغطية ميدانية مباشرة</span><span>● النادي الأهلي</span><span>● مبادرة مدرستنا</span><span>● لقاءات تلفزيونية</span><span>● صحافة الميدان</span>
+    </div>
+  </div>
+</section>
+
+<!-- Graduation Project -->
+<section id="graduation" class="relative py-24 bg-navy">
+  <div class="glow w-80 h-80 bg-cyan top-10 left-0"></div>
+  <div class="relative max-w-7xl mx-auto px-4">
+    <div class="reveal max-w-2xl">
+      <h2 class="text-3xl sm:text-4xl font-black">مشروع التخرج</h2>
+      <p class="mt-3 text-slate-400 leading-8">عمل وثائقي متكامل من الفكرة إلى الشاشة: رؤية إخراجية، سرد قصصي، وجودة إنتاج تعكس خبرة صانع المحتوى.</p>
+    </div>
+    <div class="mt-10 grid lg:grid-cols-5 gap-6">
+      <button class="reveal tilt glass rounded-2xl overflow-hidden text-right lg:col-span-2 group" data-modal="https://drive.google.com/file/d/1ACdmWkk702K_0KTVYoPngDk6GJ3-tc6Q/preview" aria-label="عرض بوستر المشروع">
+        <div class="relative bg-navy2" style="aspect-ratio:3/4">
+          <img src="https://drive.google.com/thumbnail?id=1ACdmWkk702K_0KTVYoPngDk6GJ3-tc6Q&sz=w900" alt="بوستر مشروع التخرج" class="w-full h-full object-cover" loading="lazy">
+          <span class="absolute bottom-3 right-3 bg-black/60 rounded-full px-3 py-1 text-xs"><i class="fa-solid fa-expand ml-1"></i>تكبير</span>
+        </div>
+      </button>
+      <div class="lg:col-span-3 grid gap-6 content-start">
+        <article class="reveal tilt glass rounded-2xl p-4">
+          <div class="flex items-center justify-between mb-3"><h3 class="font-bold">🎬 الإعلان التشويقي للمشروع</h3><span class="text-xs bg-cyan/20 text-cyan rounded-full px-3 py-1">Trailer</span></div>
+          <div class="ratio169 rounded-xl overflow-hidden bg-black"><iframe class="w-full h-full border-0" loading="lazy" allow="autoplay; fullscreen" allowfullscreen src="https://drive.google.com/file/d/1OG8dOtdDxURWuOYUJeCgEw42rFpX_WCv/preview" title="الإعلان التشويقي"></iframe></div>
+        </article>
+        <article class="reveal tilt glass rounded-2xl p-4">
+          <div class="flex items-center justify-between mb-3"><h3 class="font-bold">🎥 الفيلم الكامل لمشروع التخرج</h3><span class="text-xs bg-crimson/20 text-crimson rounded-full px-3 py-1">Full Film</span></div>
+          <div class="ratio169 rounded-xl overflow-hidden bg-black"><iframe class="w-full h-full border-0" loading="lazy" allow="autoplay; fullscreen" allowfullscreen src="https://drive.google.com/file/d/1TyTmt8V58TLEf5ddYhcRsR5vp2jkP6N2/preview" title="فيلم مشروع التخرج"></iframe></div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Coverage -->
+<section id="coverage" class="relative py-24 bg-slate9">
+  <div class="glow w-80 h-80 bg-crimson bottom-0 right-0"></div>
+  <div class="relative max-w-7xl mx-auto px-4">
+    <div class="reveal max-w-2xl">
+      <h2 class="text-3xl sm:text-4xl font-black">التغطيات واللقاءات الميدانية</h2>
+      <p class="mt-3 text-slate-400 leading-8">من قلب الحدث: تغطيات ولقاءات تلفزيونية ضمن Presentation Live Media Production.</p>
+    </div>
+    <div class="mt-10 grid md:grid-cols-2 gap-6">
+      <article class="reveal tilt glass rounded-2xl p-4">
+        <div class="flex items-center justify-between mb-3"><h3 class="font-bold">تغطية ميدانية ولقاء تلفزيوني</h3>
+          <span class="flex gap-2 text-xs"><span class="bg-crimson/20 text-crimson rounded-full px-3 py-1">● Live</span><span class="bg-cyan/20 text-cyan rounded-full px-3 py-1">Sports</span></span></div>
+        <div class="ratio169 rounded-xl overflow-hidden bg-black"><iframe class="w-full h-full border-0" loading="lazy" allow="autoplay; fullscreen" allowfullscreen src="https://drive.google.com/file/d/1O5mf6afTEx9UbUnsGNcAFyEZGur_PuHQ/preview" title="تغطية ميدانية 1"></iframe></div>
+      </article>
+      <article class="reveal tilt glass rounded-2xl p-4">
+        <div class="flex items-center justify-between mb-3"><h3 class="font-bold">تغطية ميدانية ولقاء تلفزيوني</h3>
+          <span class="flex gap-2 text-xs"><span class="bg-cyan/20 text-cyan rounded-full px-3 py-1">On-Field</span><span class="bg-white/10 rounded-full px-3 py-1">Interview</span></span></div>
+        <div class="ratio169 rounded-xl overflow-hidden bg-black"><iframe class="w-full h-full border-0" loading="lazy" allow="autoplay; fullscreen" allowfullscreen src="https://drive.google.com/file/d/1JxtArEcUe50OAtd6OjasEHYkB275sMMJ/preview" title="تغطية ميدانية 2"></iframe></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Experience -->
+<section id="experience" class="py-24 bg-navy">
+  <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12">
+    <div>
+      <h2 class="reveal text-3xl sm:text-4xl font-black">الخبرات المهنية</h2>
+      <ol class="mt-8 relative border-r-2 border-white/10 pr-6 space-y-8">
+        <li class="reveal relative"><span class="absolute -right-[33px] top-1.5 w-4 h-4 rounded-full bg-crimson ring-4 ring-navy"></span>
+          <h3 class="font-bold text-lg">مراسل تلفزيوني <span class="font-en text-cyan text-sm">· TV Reporter</span></h3>
+          <p class="text-sm text-slate-400 font-en">Presentation Live Media Production</p>
+          <p class="mt-1 text-slate-300 leading-7">تغطية أخبار الرياضة، النادي الأهلي، فعاليات مدرستنا، وإجراء المقابلات الحية.</p></li>
+        <li class="reveal relative"><span class="absolute -right-[33px] top-1.5 w-4 h-4 rounded-full bg-cyan ring-4 ring-navy"></span>
+          <h3 class="font-bold text-lg">متدرب مراسل أخبار <span class="font-en text-cyan text-sm">· News Reporter Intern</span></h3>
+          <p class="text-sm text-slate-400 font-en">Adasa News</p>
+          <p class="mt-1 text-slate-300 leading-7">تغطية الفعاليات الميدانية والقصص الإخبارية الرقمية.</p></li>
+        <li class="reveal relative"><span class="absolute -right-[33px] top-1.5 w-4 h-4 rounded-full bg-white/70 ring-4 ring-navy"></span>
+          <h3 class="font-bold text-lg">إعلام وعمل تطوعي <span class="font-en text-cyan text-sm">· Media &amp; Volunteering</span></h3>
+          <p class="text-sm text-slate-400 font-en">Enactus · مؤسسة نبض العطاء</p></li>
+      </ol>
+    </div>
+    <div>
+      <h2 class="reveal text-3xl sm:text-4xl font-black">المهارات</h2>
+      <div class="reveal mt-8 glass rounded-2xl p-6">
+        <h3 class="font-bold mb-3 text-crimson">الصحافة والإعلام</h3>
+        <div class="flex flex-wrap gap-2 text-sm font-en">
+          <span class="glass rounded-full px-3 py-1">Field Reporting</span><span class="glass rounded-full px-3 py-1">On-Camera Presentation</span><span class="glass rounded-full px-3 py-1">Interview Moderation</span><span class="glass rounded-full px-3 py-1">Script Writing</span><span class="glass rounded-full px-3 py-1">Storytelling</span><span class="glass rounded-full px-3 py-1">Live Coverage</span>
+        </div>
+        <h3 class="font-bold mt-6 mb-3 text-cyan">الإنتاج والتقنية</h3>
+        <div class="flex flex-wrap gap-2 text-sm font-en">
+          <span class="glass rounded-full px-3 py-1">Video Shooting</span><span class="glass rounded-full px-3 py-1">CapCut Editing</span><span class="glass rounded-full px-3 py-1">Audio Editing</span><span class="glass rounded-full px-3 py-1">OSINT</span><span class="glass rounded-full px-3 py-1">Social Media Management</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Certificates -->
+  <div class="max-w-7xl mx-auto px-4 mt-20">
+    <h2 class="reveal text-3xl sm:text-4xl font-black">الشهادات والاعتمادات</h2>
+    <p class="reveal mt-3 text-slate-400">من أبرزها: Radio 9090 للتقديم الإذاعي والتلفزيوني، وشهادة OSINT. اضغط على أي شهادة لتكبيرها.</p>
+    <div class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" id="certs"></div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="relative py-24 bg-slate9 overflow-hidden">
+  <div class="glow w-96 h-96 bg-crimson -bottom-20 left-1/3"></div>
+  <div class="relative max-w-5xl mx-auto px-4 text-center">
+    <h2 class="reveal text-3xl sm:text-4xl font-black">لنتحدث عن تغطيتك القادمة</h2>
+    <p class="reveal mt-3 text-slate-400">للتعاون في التغطيات واللقاءات والإنتاج الإعلامي.</p>
+    <div class="mt-10 grid sm:grid-cols-3 gap-4">
+      <a href="tel:+201124819434" class="reveal tilt glass rounded-2xl p-6 block"><i class="fa-solid fa-phone text-2xl text-cyan"></i><div class="mt-3 font-bold">الهاتف</div><div dir="ltr" class="text-slate-300 font-en mt-1">+20 11 24819434</div></a>
+      <a href="https://wa.me/201124819434" target="_blank" rel="noopener" class="reveal tilt glass rounded-2xl p-6 block"><i class="fa-brands fa-whatsapp text-2xl text-green-400"></i><div class="mt-3 font-bold">واتساب</div><div class="text-slate-300 mt-1">ابدأ محادثة مباشرة</div></a>
+      <a href="mailto:mohamedibrahm291@gmail.com" class="reveal tilt glass rounded-2xl p-6 block"><i class="fa-solid fa-envelope text-2xl text-crimson"></i><div class="mt-3 font-bold">البريد الإلكتروني</div><div class="text-slate-300 font-en mt-1 text-sm break-all">mohamedibrahm291@gmail.com</div></a>
+    </div>
+    <div class="mt-8 flex justify-center gap-4">
+      <a href="https://web.facebook.com/mohamed.ibrahim.982718" target="_blank" rel="noopener" aria-label="Facebook" class="tilt glass w-12 h-12 rounded-full grid place-items-center text-xl hover:text-cyan"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/m.ibrahim965?stkn=MTFqNHdnbm02YnE5bQ==" target="_blank" rel="noopener" aria-label="Instagram" class="tilt glass w-12 h-12 rounded-full grid place-items-center text-xl hover:text-crimson"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-navy border-t border-white/10 py-6 text-center text-sm text-slate-400">
+  © <span id="yr"></span> محمد إبراهيم | Mohamed Ibrahim. جميع الحقوق محفوظة.
+</footer>
+
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/85 p-4" role="dialog" aria-modal="true">
+  <button id="closeModal" class="absolute top-4 left-4 w-11 h-11 rounded-full glass text-xl" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+  <div class="w-full max-w-4xl h-[85vh] rounded-2xl overflow-hidden bg-navy2"><iframe id="modalFrame" class="w-full h-full border-0" allow="autoplay; fullscreen" allowfullscreen title="عرض"></iframe></div>
+</div>
+
+<script>
+const certIds = ['1iYd7n3t9gO6iG3tCWUGP4bNii-r1MHlf','1tTMFxRAWbscHtOB_vAD0-NMN5r60RYIh','1kxKi6qpnuKHK2KHu_7zDB5Ix-UQarY-n','13YCam7C8l0YvHn63zdQdrkU7H9j8vGXw','1Xa3Efh_gnb3hRNNCexwnYDrFsQDpQsNg'];
+const certs = document.getElementById('certs');
+certIds.forEach((id, i) => {
+  const b = document.createElement('button');
+  b.className = 'reveal tilt glass rounded-xl overflow-hidden relative bg-navy2';
+  b.style.aspectRatio = '4/3';
+  b.dataset.modal = `https://drive.google.com/file/d/${id}/preview`;
+  b.setAttribute('aria-label', 'عرض الشهادة ' + (i + 1));
+  b.innerHTML = `<img src="https://drive.google.com/thumbnail?id=${id}&sz=w600" alt="الشهادة ${i + 1}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'"><span class="absolute inset-x-0 bottom-0 bg-black/60 text-xs py-1.5"><i class="fa-solid fa-magnifying-glass-plus ml-1"></i>الشهادة ${i + 1}</span>`;
+  certs.appendChild(b);
+});
+
+const modal = document.getElementById('modal'), frame = document.getElementById('modalFrame');
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-modal]');
+  if (t) { frame.src = t.dataset.modal; modal.classList.remove('hidden'); modal.classList.add('flex'); document.body.style.overflow = 'hidden'; }
+});
+function closeModal() { modal.classList.add('hidden'); modal.classList.remove('flex'); frame.src = 'about:blank'; document.body.style.overflow = ''; }
+document.getElementById('closeModal').onclick = closeModal;
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+const menu = document.getElementById('mobileMenu');
+document.getElementById('menuBtn').onclick = () => { menu.classList.toggle('hidden'); menu.classList.toggle('flex'); };
+menu.querySelectorAll('a').forEach(a => a.onclick = () => { menu.classList.add('hidden'); menu.classList.remove('flex'); });
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('show'); io.unobserve(x.target); } }), { threshold: .12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
