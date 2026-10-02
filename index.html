@@ -331,7 +331,6 @@ tailwind.config = { theme: { extend: {
       <button id="closeModal" type="button" class="w-10 h-10 shrink-0 rounded-full glass text-xl flex items-center justify-center hover:bg-crimson transition" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div id="modalStage" class="relative w-full rounded-2xl overflow-hidden bg-black border border-white/15 shadow-2xl">
-      <iframe id="modalFrame" class="absolute inset-0 w-full h-full border-0" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen title="Player"></iframe>
     </div>
   </div>
 </div>
@@ -437,23 +436,68 @@ function setLanguage(l) {
 $('langToggleBtn').onclick = $('mobileLangToggle').onclick = () => setLanguage(lang === 'ar' ? 'en' : 'ar');
 
 /* ---------- Cinema modal ---------- */
-const modal = $('modal'), frame = $('modalFrame'), box = $('modalBox'), stage = $('modalStage');
-let opener = null;
+// Optional but most reliable on phones: upload the video to YouTube (Unlisted) and map
+// the Drive file id to the YouTube id, e.g.  const YT = { '1OG8dOtd...': 'dQw4w9WgXcQ' };
+const YT = {};
+
+const modal = $('modal'), box = $('modalBox'), stage = $('modalStage');
+let opener = null, timer = null;
+const idOf = u => (u.match(/\/d\/([^/]+)/) || [])[1];
+const thumb = (id, w) => `https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
+
+// Size the stage to the real video ratio (landscape or portrait) so there is no black bars / cropping
+function fit(r) {
+  r = Math.max(.4, Math.min(2.4, r || 16 / 9));
+  stage.style.aspectRatio = r;
+  box.style.maxWidth = 'min(64rem, calc((100vh - 7rem) * ' + r + '))';
+  box.style.maxWidth = 'min(64rem, calc((100dvh - 7rem) * ' + r + '))'; // ignored where dvh is unsupported
+}
+function mountFrame(src) {
+  stage.innerHTML = '';
+  const f = document.createElement('iframe');
+  f.className = 'absolute inset-0 w-full h-full border-0';
+  f.allow = 'autoplay; fullscreen; picture-in-picture; encrypted-media';
+  f.allowFullscreen = true; f.title = 'Player'; f.src = src;
+  stage.appendChild(f);
+}
+function mountVideo(id) {
+  if (YT[id]) { fit(16 / 9); return mountFrame(`https://www.youtube-nocookie.com/embed/${YT[id]}?playsinline=1&rel=0&autoplay=1`); }
+  const v = document.createElement('video');
+  v.className = 'absolute inset-0 w-full h-full object-contain bg-black';
+  v.controls = true; v.preload = 'metadata'; v.poster = thumb(id, 1000);
+  v.setAttribute('playsinline', ''); v.setAttribute('webkit-playsinline', ''); v.setAttribute('controlsList', 'nodownload');
+  let ready = false;
+  const fallback = () => { clearTimeout(timer); fit(16 / 9); mountFrame(`https://drive.google.com/file/d/${id}/preview`); };
+  v.addEventListener('loadedmetadata', () => { ready = true; clearTimeout(timer); if (v.videoWidth) fit(v.videoWidth / v.videoHeight); });
+  v.addEventListener('error', fallback);
+  timer = setTimeout(() => { if (!ready) fallback(); }, 10000);
+  v.src = `https://drive.usercontent.google.com/download?id=${id}&export=download&confirm=t`;
+  stage.innerHTML = ''; stage.appendChild(v);
+  const p = v.play(); if (p && p.catch) p.catch(() => {});
+}
+function mountImage(id, url) {
+  const img = new Image();
+  img.className = 'absolute inset-0 w-full h-full object-contain';
+  img.alt = ''; img.onerror = () => mountFrame(url); img.src = thumb(id, 1600);
+  stage.innerHTML = ''; stage.appendChild(img);
+}
 
 function openModal(trigger) {
-  const url = trigger.dataset.modal, isVideo = trigger.dataset.type === 'video';
+  const url = trigger.dataset.modal, id = idOf(url), isVideo = trigger.dataset.type === 'video';
   opener = trigger;
   box.className = 'w-full flex flex-col gap-2.5 ' + (isVideo ? 'vid-box' : 'doc-box');
   stage.className = 'relative w-full rounded-2xl overflow-hidden bg-black border border-white/15 shadow-2xl ' + (isVideo ? 'vid-stage' : 'doc-stage');
+  box.style.maxWidth = ''; stage.style.aspectRatio = '';
   $('externalPlayerLink').href = url.replace('/preview', '/view');
-  frame.src = url;
   modal.classList.remove('hidden'); modal.classList.add('flex');
   document.documentElement.classList.add('modal-open');
+  isVideo ? mountVideo(id) : mountImage(id, url);
   $('closeModal').focus({ preventScroll: true });
 }
 function closeModal() {
+  clearTimeout(timer);
+  stage.innerHTML = '';
   modal.classList.add('hidden'); modal.classList.remove('flex');
-  frame.src = 'about:blank';
   document.documentElement.classList.remove('modal-open');
   if (opener) opener.focus({ preventScroll: true });
 }
